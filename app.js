@@ -72,15 +72,22 @@ document.addEventListener("dblclick", (e)=>{
     }
 })
 
+const download_btn = document.querySelector(".downloading_btn")
+
 const download = ()=>{
     const all_checkedBox = document.querySelectorAll("input:checked")
-    if(all_checkedBox.length > 0){
+    if(all_checkedBox.length > 0 && all_checkedBox.length != 1){
         all_checkedBox.forEach(inp => {
             const index = inp.getAttribute(['data-index'])
             const filename = imgnames[index]
             choosed_files.push(`imgs/${filename}`)
         })
         get_downloaded();
+    }else if(all_checkedBox.length == 1){
+        const index = all_checkedBox[0].getAttribute(['data-index'])
+        const filename = imgnames[index]
+        download_btn.href = filename
+        download_btn.click()
     }
 }
 
@@ -94,7 +101,6 @@ const get_downloaded = ()=>{
     })
 }
 
-const download_btn = document.querySelector(".downloading_btn")
 const download_loaded = (filename)=>{
     console.log(filename);
     const xhr = new XMLHttpRequest()
